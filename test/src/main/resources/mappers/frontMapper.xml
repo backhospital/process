@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.mappers.frontMapper">
+
+	<!-- 크롤링 이미지 리스트 보기 -->
+	<select id="pricelist" resultType="com.test.domain.frontVO">
+		select * from inimagelist
+	</select>
+	
+	<!-- 승인 리스트 보기 -->
+	<select id = "approvelist" resultType="com.test.domain.frontVO">
+		select
+			idx, productid, data3, data2, data4, data1, timestamp, verify
+		from offer
+		WHERE verify = 1	
+	</select>
+	
+	<!-- 고객요청 리스트 // where userid = #{userid} 추가해야함 -->
+	<select id="offerlist" resultType="com.test.domain.frontVO">
+		select 
+			idx, data3, productid, data2, data4, data1, timestamp, verify
+		from offer	
+	</select>
+	
+</mapper>

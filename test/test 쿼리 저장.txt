@@ -1,0 +1,42 @@
+CREATE TABLE `offer` (
+	`idx` INT(11) NOT NULL AUTO_INCREMENT,
+	`brandname` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`productname` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`offerprice` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`offerdes` VARCHAR(500) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`offerimg` VARCHAR(500) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`offerthumbimg` VARCHAR(500) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`offerdate` TIMESTAMP NULL DEFAULT current_timestamp(),
+	`verify` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	PRIMARY KEY (`idx`) USING BTREE
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=0
+;
+
+INSERT INTO offer_approve
+SELECT *
+FROM offer
+WHERE productnum = '3'
+
+select 
+inimagelist.idx,
+inimagelist.data3,
+inimagelist.data2,
+inimagelist.data1,
+inimagelist.productid
+from inimagelist
+inner join offer
+on
+inimagelist.idx = offer.idx
+
+INSERT INTO display (productid, data1, data2, data3, data4, data5, path, TIMESTAMP, verify)
+SELECT productid, data1, data2, data3, data4, data5, path, TIMESTAMP, verify
+FROM inimagelist
+
+
+INSERT INTO display (productid, data1, data2, data3, data4, data5, path, TIMESTAMP, verify)
+SELECT productid, data1, data2, data3, data4, data5, path, TIMESTAMP, verify
+FROM offer_approve
+WHERE idx = 1

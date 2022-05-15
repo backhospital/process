@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.mappers.adminMapper">
+
+	
+	<!-- 승인리스트 등록 -->
+	<insert id ="offer_approve">
+		UPDATE offer SET verify=1 
+		WHERE  idx= #{idx}
+	</insert>
+	
+	<!-- 거절리스트 등록 -->
+	<insert id ="offer_reject">
+		UPDATE offer SET verify=2 
+		WHERE  idx= #{idx}
+	</insert>
+		
+	<!-- 고객요청 리스트 -->
+	<select id="offerlist" resultType="com.test.domain.testVO">
+		select 
+			idx, data3, productid, data2, data4, data1, timestamp, verify
+		from offer	
+	</select>
+			
+	<!-- 승인 리스트 보기 -->
+	<select id = "approvelist" resultType="com.test.domain.testVO">
+		select
+			idx, productid, data3, data2, data4, data1, timestamp, verify
+		from offer
+		WHERE verify = 1	
+	</select>
+	
+	<!-- 거절 리스트 보기 -->
+	<select id = "rejectlist" resultType="com.test.domain.testVO">
+		select
+			idx, productid, data3, data2, data4, data1, timestamp, verify
+		from offer
+		WHERE verify = 2		
+	</select>
+	
+	<!-- 승인 상품보기 -->
+	<select id = "view_approve" resultType="com.test.domain.testVO">
+		select 
+			idx, data3, productid, data2, data4, data1, timestamp, verify
+		from offer	
+		where verify = 1 AND idx = #{idx}
+	</select>
+	
+	<!-- 승인 상품 display로 보내기 -->
+	<insert id ="add_display">
+		INSERT INTO display (productid, data3, data2, data4, data1,verify)
+		SELECT productid, data3, data2, data4, data1,verify
+		FROM offer
+		where idx = #{idx}
+	</insert>
+
+</mapper>
